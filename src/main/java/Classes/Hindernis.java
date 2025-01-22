@@ -1,3 +1,5 @@
+package Classes;
+
 public class Hindernis {
     private final int hindernesX;
     private final int hindernesY;

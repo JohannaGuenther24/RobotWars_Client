@@ -1,3 +1,5 @@
+package Classes;
+
 public class Item {
     private final int itemX;
     private final int itemY;

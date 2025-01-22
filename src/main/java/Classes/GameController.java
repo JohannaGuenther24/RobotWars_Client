@@ -1,3 +1,5 @@
+package Classes;
+
 import java.util.Random;
 
 public class GameController {
@@ -15,10 +17,10 @@ public class GameController {
         this.view = view;
     }
 
-    Item item = new Item(5, 3);
-    Item item2 = new Item(5, 6);
-    Item item3 = new Item(8, 3);
-    Item item4 = new Item(8, 6);
+    Item item = new Item(6, 4);
+    Item item2 = new Item(6, 7);
+    Item item3 = new Item(9, 4);
+    Item item4 = new Item(9, 7);
     Item[] items = {item, item2, item3, item4};
 
     Hindernis hindernis = new Hindernis(2,0);
@@ -28,12 +30,16 @@ public class GameController {
 
     public void createPlayer(Robot robot, char symbol, int x, int y) {
         String blue = "\u001B[34m";
-        robot.setName(askName());
+//        robot.setName(askName());
         robot.setSymbol(symbol);
         robot.setX(x);
         robot.setY(y);
         robot.setColor(blue);
-        setSkillpoints(robot);
+        robot.setHealth(5);
+        robot.setAttackDamage(3);
+        robot.setAttackRange(2);
+        robot.setMovementRate(5);
+//        setSkillpoints(robot);
     }
 
     public void createNPC(Robot robot, String name, char symbol, int health, int attackRange, int movementRate, int attackDamage, int x, int y) {
@@ -99,7 +105,7 @@ public class GameController {
 
         view.viewSkills(attributs, values, available);
 
-
+        // Möglichkeit Skillpoints zu ändern
 //        while(!check) {
 //            int answer = view.changeSkills();
 //            if(answer == 1){
@@ -114,7 +120,7 @@ public class GameController {
     }
 
     public void showBattlefield(Robot robot, Robot enemy) {
-        view.viewBattlefield(robot, enemy, map.getColumns(), map.getRows(), map.getMap(), items, hindernisse);
+        view.viewBattlefield(robot, enemy, map, items, hindernisse);
     }
 
     public void move(Robot robot, Robot enemy) {
@@ -245,7 +251,7 @@ public class GameController {
         int randomNumber = random.nextInt(2) + 1;
 
         String[] symbols = {"+", "-"};
-        //Zufälliges Symbol ob das Item positiv oder negativ sein soll
+        //Zufälliges Symbol ob das Classes.Item positiv oder negativ sein soll
         String randomSymbol = symbols[random.nextInt(symbols.length)];
 
         //Zufällige Zahl um einen zufälligen Skill zu ändern; 1: AttackDamage, 2: AttackRange, 3: MovementRate

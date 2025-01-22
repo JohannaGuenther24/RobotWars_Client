@@ -1,3 +1,5 @@
+package Classes;
+
 public class Robot {
     private  String name;
     private char symbol;

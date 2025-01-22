@@ -1,10 +1,12 @@
+package Classes;
+
 import java.util.Scanner;
 
 public class View {
     static Scanner sc = new Scanner(System.in);
 
     public void intro() {
-        System.out.println("Willkommen zu Robot Wars!");
+        System.out.println("Willkommen zu Classes.Robot Wars!");
         System.out.println();
         System.out.println("""
                  _______               _______
@@ -72,53 +74,36 @@ public class View {
         return sc.nextInt();
     }
 
-    public void viewBattlefield(Robot robot, Robot enemy, int colums, int rows, String[][] map, Item[] items, Hindernis[] hindernisse){
-        int x = robot.getX() - 1;
-        int y = robot.getY()-1;
 
-        int x2 = enemy.getX()-1;
-        int y2 = enemy.getY()-1;
-
+    public void viewBattlefield(Robot robot, Robot enemy, Map map, Item[] items, Hindernis[] hindernisse) {
         String reset = "\u001B[0m";
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < colums; j++) {
-                //Roboter anzeigen
-                if (i == y && j == x) {
-                    map[i][j] = "["+robot.getColor()+ robot.getSymbol() + reset +"]";
-                }
-                //Gegner anzeigen
-                else if (i == y2 && j == x2) {
-                    map[i][j] = "["+enemy.getColor()+ enemy.getSymbol() + reset +"]";
-                }
-                // Objekte anzeigen
-                else {
+        for (int y = 0; y < map.getRows(); y++) {
+            for (int x = 0; x < map.getColumns(); x++) {
+                if (x == robot.getX()-1 && y == robot.getY()-1){
+                    System.out.print("[" + robot.getColor() + robot.getSymbol() + reset + "]");
+                } else if (x == enemy.getX()-1 && y == enemy.getY()-1){
+                    System.out.print("[" + enemy.getColor() + enemy.getSymbol() + reset + "]");
+                } else {
                     boolean itemFound = false;
                     for (Item item : items) {
-                        if (i == item.getItemY() && j == item.getItemX()) {
-                            map[i][j] = "[" + item.getColor() + item.getSymbol() + reset + "]";
+                        if (y == item.getItemY()-1 && x == item.getItemX()-1) {
+                            System.out.print("[" + item.getColor() + item.getSymbol() + reset + "]");
                             itemFound = true;
-                            break;
                         }
                     }
-                    itemFound = false;
+
                     for (Hindernis hindernis : hindernisse) {
-                        if (i == hindernis.getItemY() && j == hindernis.getItemX()) {
-                            map[i][j] = "[" + hindernis.getColor() + hindernis.getSymbol() + reset + "]";
+                        if (y == hindernis.getItemY()-1 && x == hindernis.getItemX()-1) {
+                            System.out.print("[" + hindernis.getColor() + hindernis.getSymbol() + reset + "]");
                             itemFound = true;
-                            break;
                         }
                     }
                     // Leere Felder anzeigen
                     if (!itemFound) {
-                        map[i][j] = "[ ]";
+                        System.out.print("[ ]");
                     }
                 }
-            }
-        }
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < colums; j++) {
-                System.out.print(map[i][j] + " ");
             }
             System.out.println();
         }
