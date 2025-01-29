@@ -2,6 +2,7 @@ package Server;
 
 public class Robot {
     private static int idCounter = 0;
+
     private int robotId;
     private  String name;
     private int attackRange;

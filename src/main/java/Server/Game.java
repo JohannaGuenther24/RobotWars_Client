@@ -1,10 +1,15 @@
 package Server;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
-    private static int idCounter = 0;
+    private static int gameIdCounter = 0;
+
     private int gameId;
     private int mapId;
-    private int[] players;
+    private int robotId;
+    private List<Player> players;
     private int[] moves;
     private String status;
 
@@ -12,9 +17,19 @@ public class Game {
 
     }
 
-    public Game(int mapId){
-        this.gameId = ++idCounter;
+    public Game(int mapId, int robotId){
+        this.gameId = ++gameIdCounter;
         this.mapId = mapId;
+        players = createPlayerId(robotId);
+        setStatus("INITIAL");
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public int getRobotId() {
+        return robotId;
     }
 
     public int getGameId() {
@@ -23,10 +38,6 @@ public class Game {
 
     public int getMapId() {
         return mapId;
-    }
-
-    public int[] getPlayers() {
-        return players;
     }
 
     public int[] getMoves() {
@@ -45,15 +56,22 @@ public class Game {
         this.mapId = mapId;
     }
 
-    public void setPlayers(int[] players) {
-        this.players = players;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
 
     public void setMoves(int[] moves) {
         this.moves = moves;
+    }
+
+    public void setRobotId(int robotId) {
+        this.robotId = robotId;
+    }
+
+    public List<Player> createPlayerId(int robotId){
+        List<Player> players = new ArrayList<>();
+        Player player = new Player(robotId);
+        players.add(player);
+        return players;
     }
 }
