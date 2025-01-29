@@ -10,7 +10,7 @@ public class Game {
     private int mapId;
     private int robotId;
     private List<Player> players;
-    private int[] moves;
+    private List<Move> moves;
     private String status;
 
     public Game(){
@@ -20,8 +20,14 @@ public class Game {
     public Game(int mapId, int robotId){
         this.gameId = ++gameIdCounter;
         this.mapId = mapId;
-        players = createPlayerId(robotId);
+        this.robotId = robotId;
+        this.players = createPlayerId(robotId);
+        this.moves = addMovesToList();
         setStatus("INITIAL");
+    }
+
+    public List<Move> getMoves() {
+        return moves;
     }
 
     public List<Player> getPlayers() {
@@ -40,12 +46,16 @@ public class Game {
         return mapId;
     }
 
-    public int[] getMoves() {
-        return moves;
-    }
-
     public String getStatus() {
         return status;
+    }
+
+    public void setMoves(List<Move> moves) {
+        this.moves = moves;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public void setGameId(int gameId) {
@@ -60,10 +70,6 @@ public class Game {
         this.status = status;
     }
 
-    public void setMoves(int[] moves) {
-        this.moves = moves;
-    }
-
     public void setRobotId(int robotId) {
         this.robotId = robotId;
     }
@@ -73,5 +79,20 @@ public class Game {
         Player player = new Player(robotId);
         players.add(player);
         return players;
+    }
+
+    public List<Move> addMovesToList(){
+        List<Move> moves = new ArrayList<>();
+
+        return moves;
+    }
+
+    public int getPlayerIdByRobotId(List<Player> players, int robotId) {
+        for (Player player : players) {
+            if (player.getRobotId() == robotId) {
+                return player.getPlayerId();
+            }
+        }
+        return 0;
     }
 }
