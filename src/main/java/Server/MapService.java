@@ -20,7 +20,7 @@ public class MapService {
     }
 
     @GetMapping
-    public List<Map> getAllRobots() {
+    public List<Map> getAllMaps() {
         return maps;
     }
 

@@ -30,4 +30,9 @@ public class Player {
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
+
+    public static Player createPlayerId(int robotId){
+
+        return new Player(robotId);
+    }
 }
