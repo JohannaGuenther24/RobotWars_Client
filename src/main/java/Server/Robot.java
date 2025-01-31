@@ -15,10 +15,11 @@ public class Robot {
 
     }
 
-    public Robot(String name, int attackRange, int attackDamage, int movementRate){
+    public Robot(String name, int health, int attackRange, int attackDamage, int movementRate){
         this.robotId = ++idCounter;
         this.name = name;
         this.attackRange = attackRange;
+        this.health = health;
         this.attackDamage = attackDamage;
         this.movementRate = movementRate;
     }

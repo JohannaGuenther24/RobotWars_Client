@@ -23,11 +23,12 @@ public class GameService {
         moves.add(new Move(2,2,"MOVE", "N",2));
         moves.add(new Move(2,3,"MOVE", "S",42));
 
-        Game game = new Game(1,2);
+        Game game = new Game(1);
         game.setMoves(moves);
         games.add(game);
-
     }
+
+    //Game Requests
 
     @GetMapping
     public List<Game> getAllGames() {
@@ -43,6 +44,32 @@ public class GameService {
         }
         return null;
     }
+
+    @PostMapping("/game")
+    public void createGame(@RequestBody Game g) {
+        Game newGame = new Game(g.getMapId());
+        games.add(newGame);
+    }
+
+    @PostMapping("/game/{gameId}/join")
+    public void joinGame(@RequestBody Player p,@PathVariable(value = "gameId")int gameId) {
+        for (Game game : games){
+            if(game.getGameId()==gameId){
+                Player newPlayer = Player.createPlayerId(p.getRobotId());
+                List<Player> gamePlayer = game.getPlayers();
+                gamePlayer.add(newPlayer);
+                if(game.getPlayers().size()>1){
+                    game.setStatus("STARTED");
+                }
+            }
+        }
+
+    }
+
+
+
+
+    //Move Requests
 
     @GetMapping("/{id}/moves")
     public List<Move> getAllMoves(@PathVariable(value = "id")int GameId) {
@@ -63,24 +90,6 @@ public class GameService {
     public void createPlayerMove(@RequestBody Move m, @PathVariable(value = "gameId")int gameId, @PathVariable(value = "playerId")int playerId) {
         Move newMove = new Move(gameId, playerId, m.getMovementType(), m.getAlign(), m.getMapIndex());
         moves.add(newMove);
-    }
-
-
-    @PostMapping("/game")
-    public void createGame(@RequestBody Game g) {
-        Game newGame = new Game(g.getMapId(), g.getRobotId());
-        games.add(newGame);
-    }
-
-    @PostMapping("/game/{gameId}/join")
-    public void joinGame(@RequestBody Player p,@PathVariable(value = "gameId")int gameId) {
-        for (Game game : games){
-            if(game.getGameId()==gameId){
-                Player newPlayer = Player.createPlayerId(p.getRobotId());
-                List<Player> gamePlayer = game.getPlayers();
-                gamePlayer.add(newPlayer);
-            }
-        }
     }
 
     @GetMapping("/game/{gameId}/move/{moveId}/after")

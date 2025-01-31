@@ -14,8 +14,8 @@ public class RobotService {
     private List<Robot> robots = new ArrayList<>();
 
     RobotService() {
-        robots.add(new Robot("Bot", 5, 5, 5));
-        robots.add(new Robot("WALL E", 3, 5, 2));
+        robots.add(new Robot("Bot", 1,5, 5, 5));
+        robots.add(new Robot("WALL E",1, 3, 5, 2));
     }
 
     @GetMapping
@@ -36,7 +36,7 @@ public class RobotService {
 
     @PostMapping("/robot")
     public void createRobot(@RequestBody Robot r) {
-        Robot newRobot = new Robot(r.getName(), r.getAttackRange(), r.getAttackDamage(), r.getMovementRate());
+        Robot newRobot = new Robot(r.getName(),r.getHealth(), r.getAttackRange(), r.getAttackDamage(), r.getMovementRate());
         robots.add(newRobot);
     }
 }
